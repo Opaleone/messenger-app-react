@@ -7,8 +7,10 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      <ConversationList />
-      <Conversation />
+      <div id='lower-half'>
+        <ConversationList />
+        <Conversation />
+      </div>
     </div>
   );
 }
