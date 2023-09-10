@@ -3,7 +3,7 @@ import React from 'react'
 const conversations = [
   {
     sender: 'Aaron Sanchez',
-    lastMessage: 'Yo!! Where you been?'
+    lastMessage: 'BET THAT'
   },
   {
     sender: 'Fred Serrano',
