@@ -113,8 +113,7 @@ body {
 
 #conversation-wrapper {
   width: 75%;
-  height: 55.25rem;
-  flex-shrink: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -133,16 +132,16 @@ body {
   font-size: x-large;
   font-style: bold;
   margin-left: 20px;
-  color: var(--black)
+  color: var(--black);
 }
 
 #message-display {
-  height: 72vh;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 #convo-input {
@@ -152,6 +151,8 @@ body {
   display: flex;
   justify-content: left;
   align-items: center;
+  position: absolute;
+  bottom: 0;
 }
 
 #convo-text-bar {
