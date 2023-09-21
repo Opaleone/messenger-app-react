@@ -1,11 +1,63 @@
 const Message = require('../models/message')
 
-const handleNewMessage = async (req, res) => {
-  if (!req) res.status(404).send('No message data found!')
-
-  await Message.create(req.body)
-}
-
 module.exports = {
-  handleNewMessage
+  getThoughts: async (req, res) => {
+    try {
+      const allMessages = await Message.find();
+
+      if (!allMessages) {
+        res.status(404).json({ message: 'No messages found!'});
+      }
+
+      res.status(200).json(allMessages)
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
+  createMessage: async (req, res) => {
+    try {
+      const newMessage = await Message.create(req.body);
+
+      if (!newMessage) {
+        res.status(404).json({ message: 'Must have content for new message!'})
+      }
+
+      res.status(201).json(newMessage);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
+  updateMessage: async (req, res) => {
+    try {
+      const updateMessage = Message.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: req.body },
+        { runValidators: true, new: true }
+      )
+
+      if (!updateMessage) {
+        res.status(404).json({ message: 'Must include data to message update'})
+      }
+
+      res.status(200).json({ message: `${req.params.id} updated!`})
+    } catch (err) {
+      res.status(500)
+    }
+  },
+
+  deleteMessage: async (req, res) => {
+    try {
+      const deleteThought = await Message.findOneAndDelete({ _id: req.params.id });
+
+      if (!req.params.id) {
+        res.status(404).json({ message: 'Must include id for thought selection'})
+      }
+
+      res.status(200).json({ message: `${req.params.id} deleted!`})
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
 }
