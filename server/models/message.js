@@ -2,8 +2,15 @@ const { Schema, default: mongoose } = require('mongoose');
 
 const messageSchema = new Schema(
   {
-    messageContent: { type: String, required: true },
-    userId: { type: Schema.Types.ObjectId, ref: 'User'},
+    messageContent: { 
+      type: String, 
+      required: true 
+    },
+    user: { 
+      type: Schema.Types.ObjectId, 
+      ref: 'User',
+      required: true
+    },
   },
   {
     timestamps: true
