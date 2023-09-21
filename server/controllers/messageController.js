@@ -1,7 +1,7 @@
 const Message = require('../models/message')
 
 module.exports = {
-  getThoughts: async (req, res) => {
+  getMessages: async (req, res) => {
     try {
       const allMessages = await Message.find();
 
