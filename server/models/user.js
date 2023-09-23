@@ -10,7 +10,7 @@ const userSchema = new Schema(
     userName: { 
       type: String, 
       unique: true, 
-      required: true 
+      required: true
     },
     email: { 
       type: String, 
@@ -31,8 +31,21 @@ const userSchema = new Schema(
 
 userSchema.pre('save', async function(next) {
   if (this.isNew || this.isModified('password')) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds)
+    const user = this;
+    await bcrypt.genSalt(10, (err, salt) => {
+      if (err) {
+        return next(err);
+      }
+      bcrypt.hash(user.password, salt, null, (error, hash) => {
+        if (error) {
+          return next(error);
+        }
+        console.log('HASH: ', hash);
+        user.password = hash;
+        console.log('USER.PASSWORD: ', user.password);
+        next();
+      })
+    })
   }
 })
 
