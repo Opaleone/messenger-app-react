@@ -6,8 +6,13 @@ const messageSchema = new Schema(
       type: String, 
       required: true 
     },
-    user: { 
-      type: Schema.Types.ObjectId, 
+    to: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    from: {
+      type: Schema.Types.ObjectId,
       ref: 'User',
       required: true
     },
