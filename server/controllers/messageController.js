@@ -1,4 +1,4 @@
-const Message = require('../models/message')
+const Message = require('../models/Message')
 
 module.exports = {
   getMessages: async (req, res) => {
@@ -11,7 +11,7 @@ module.exports = {
 
       res.status(200).json(allMessages)
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   },
 
@@ -25,7 +25,7 @@ module.exports = {
 
       res.status(201).json(newMessage);
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   },
 
@@ -43,7 +43,7 @@ module.exports = {
 
       res.status(200).json({ message: `${req.params.id} updated!`})
     } catch (err) {
-      res.status(500)
+      res.status(500).json(err.message);
     }
   },
 
@@ -57,7 +57,7 @@ module.exports = {
 
       res.status(200).json({ message: `${req.params.id} deleted!`})
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   }
 }
