@@ -1,4 +1,5 @@
 const { Schema, default: mongoose } = require('mongoose')
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema(
   {
@@ -23,6 +24,12 @@ const userSchema = new Schema(
       required: true, 
       minLength: 8 
     },
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      }
+    ]
   },
   {
     timestamps: true
