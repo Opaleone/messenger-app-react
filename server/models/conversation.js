@@ -1,9 +1,11 @@
 const { Schema, default: mongoose } = require('mongoose')
+const Message = require('./Message')
+const User = require('./User')
 
 const conversationSchema = new Schema(
   {
-    messages: [messageSchema],
-    users: [userSchema]
+    messages: [Message],
+    users: [User]
   },
   {
     timestamps: true,
