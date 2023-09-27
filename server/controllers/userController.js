@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 const User = require('../models/User')
 const bcrypt = require('bcrypt');
 
@@ -13,7 +14,7 @@ module.exports = {
   
       res.status(200).json(allUsers);
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   },
 
@@ -42,7 +43,7 @@ module.exports = {
 
       res.status(201).json(newUser);
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   },
 
@@ -61,7 +62,7 @@ module.exports = {
       res.status(200).json({ message: 'Update successful! '});
 
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   },
 
@@ -75,7 +76,7 @@ module.exports = {
 
       res.status(200).json({ message: `${req.params.id} deleted` });
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   },
 
@@ -84,15 +85,15 @@ module.exports = {
       const updateUser = await User.findOneAndUpdate(
         { _id: req.params.id },
         { $addToSet: {
-          friends: ObjectId(req.params.friendId)
+          friends: new ObjectId(req.params.friendId)
         }},
         { new: true }
       )
 
-      const updateFriends = User.findOneAndUpdate(
+      const updateFriends = await User.findOneAndUpdate(
         { _id: req.params.friendId },
         { $addToSet: {
-          friends: ObjectId(req.params.id)
+          friends: new ObjectId(req.params.id)
         }},
         { new: true }
       )
@@ -103,7 +104,7 @@ module.exports = {
 
       res.status(201).json({ user: updateUser, friend: updateFriends });
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   },
 
@@ -112,7 +113,7 @@ module.exports = {
       const updateUser = await User.findOneAndUpdate(
         { _id: req.params.id },
         { $pullAll: {
-          friends: [ ObjectId(req.params.friendId) ]
+          friends: [ new ObjectId(req.params.friendId) ]
         }},
         { new: true }
       )
@@ -120,7 +121,7 @@ module.exports = {
       const updateFriends = await User.findOneAndUpdate(
         { _id: req.params.friendId },
         { $pullAll: {
-          friends: [ ObjectId(req.params.id) ]
+          friends: [ new ObjectId(req.params.id) ]
         }},
         { new: true }
       )
@@ -131,7 +132,7 @@ module.exports = {
 
       res.status(200).json({ message: 'Friend removed'})
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   }
 }
