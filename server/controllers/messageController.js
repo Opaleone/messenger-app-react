@@ -31,7 +31,7 @@ module.exports = {
 
   updateMessage: async (req, res) => {
     try {
-      const updateMessage = Message.findOneAndUpdate(
+      const updateMessage = await Message.findOneAndUpdate(
         { _id: req.params.id },
         { $set: req.body },
         { runValidators: true, new: true }
