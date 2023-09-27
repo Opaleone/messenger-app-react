@@ -1,4 +1,4 @@
-const { MongoCursorInUseError } = require('mongodb');
+const mongoose = require('mongoose');
 const User = require('../models/User')
 const bcrypt = require('bcrypt');
 
@@ -11,7 +11,7 @@ module.exports = {
         res.status(404).json({ message: 'No users found!'})
       }
   
-      res.status(200).json(allUsers)
+      res.status(200).json(allUsers);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -19,8 +19,7 @@ module.exports = {
 
   getSingleUser: async (req, res) => {
     try {
-      const singleUser = User.findOne({ _id: req.params.id
-      });
+      const singleUser = await User.findOne({ _id: req.params.id });
 
       if (!singleUser) {
         res.status(404).json({ message: `No User with id: ${req.params.id} found!`});
@@ -29,13 +28,13 @@ module.exports = {
       res.status(200).json(singleUser);
 
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json(err.message);
     }
   },
 
   createUser: async (req, res) => {
     try {
-      const newUser = User.create(req.body);
+      const newUser = await User.create(req.body);
 
       if (!newUser) {
         res.status(404).json({ message: 'No user found!'});
@@ -68,7 +67,7 @@ module.exports = {
 
   deleteUser: async (req, res) => {
     try {
-      User.findOneAndRemove({ _id: req.params.id });
+      await User.findOneAndRemove({ _id: req.params.id });
 
       if (!req.params.id) {
         res.status(404).json({ message: 'Must include ID in request URL' })
@@ -82,7 +81,7 @@ module.exports = {
 
   newFriend: async (req, res) => {
     try {
-      const updateUser = User.findOneAndUpdate(
+      const updateUser = await User.findOneAndUpdate(
         { _id: req.params.id },
         { $addToSet: {
           friends: ObjectId(req.params.friendId)
@@ -110,7 +109,7 @@ module.exports = {
 
   deleteFriend: async (req, res) => {
     try {
-      const updateUser = User.findOneAndUpdate(
+      const updateUser = await User.findOneAndUpdate(
         { _id: req.params.id },
         { $pullAll: {
           friends: [ ObjectId(req.params.friendId) ]
@@ -118,7 +117,7 @@ module.exports = {
         { new: true }
       )
 
-      const updateFriends = User.findOneAndUpdate(
+      const updateFriends = await User.findOneAndUpdate(
         { _id: req.params.friendId },
         { $pullAll: {
           friends: [ ObjectId(req.params.id) ]
@@ -126,7 +125,7 @@ module.exports = {
         { new: true }
       )
 
-      if (!updateUser || !updateFriend) {
+      if (!updateUser || !updateFriends) {
         res.status(404).json({ message: `No data found for ${req.params.id}`});
       }
 
