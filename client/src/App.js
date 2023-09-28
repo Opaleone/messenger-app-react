@@ -1,16 +1,10 @@
 import './App.css';
-import NavBar from'./components/navBar/index';
-import ConversationList from './components/conversationList';
-import Conversation from './components/conversation';
+import Main from './pages/main';
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
-      <div id='lower-half'>
-        <ConversationList />
-        <Conversation />
-      </div>
+      <Main />
     </div>
   );
 }
