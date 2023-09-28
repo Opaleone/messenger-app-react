@@ -16,6 +16,23 @@ module.exports = {
     }
   },
 
+  getLatestMessage: async (req, res) => {
+    try {
+      const latestMessage = await Message
+      .find({
+        from: req.params.id, to: req.params.friendId 
+      })
+      .sort({
+        createdAt: -1
+      })
+      .limit(1);
+
+      res.status(200).json(latestMessage);
+    } catch (err) {
+      res.status(500).json(err.message);
+    }
+  },
+
   createMessage: async (req, res) => {
     try {
       const newMessage = await Message.create(req.body);
@@ -50,7 +67,7 @@ module.exports = {
 
   deleteMessage: async (req, res) => {
     try {
-      const deleteThought = await Message.findOneAndDelete({ _id: req.params.id });
+      await Message.findOneAndDelete({ _id: req.params.id });
 
       if (!req.params.id) {
         res.status(404).json({ message: 'Must include id for thought selection'})
@@ -64,7 +81,7 @@ module.exports = {
 
   getConversation: async (req, res) => {
     try {
-      const message = await Message
+      const conversation = await Message
         .find({
           from: req.params.id, to: req.params.friendId 
         })
@@ -72,7 +89,7 @@ module.exports = {
           createdAt: -1
         })
 
-      res.status(200).json(message);
+      res.status(200).json(conversation);
     } catch (err) {
       res.status(500).json(err.message);
     }
