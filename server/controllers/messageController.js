@@ -16,23 +16,6 @@ module.exports = {
     }
   },
 
-  getLatestMessage: async (req, res) => {
-    try {
-      const latestMessage = await Message
-      .find({
-        from: req.params.id, to: req.params.friendId 
-      })
-      .sort({
-        createdAt: -1
-      })
-      .limit(1);
-
-      res.status(200).json(latestMessage);
-    } catch (err) {
-      res.status(500).json(err.message);
-    }
-  },
-
   createMessage: async (req, res) => {
     try {
       const newMessage = await Message.create(req.body);
@@ -90,6 +73,23 @@ module.exports = {
         })
 
       res.status(200).json(conversation);
+    } catch (err) {
+      res.status(500).json(err.message);
+    }
+  },
+
+  getLatestMessage: async (req, res) => {
+    try {
+      const latestMessage = await Message
+      .find({
+        from: req.params.id, to: req.params.friendId 
+      })
+      .sort({
+        createdAt: -1
+      })
+      .limit(1);
+
+      res.status(200).json(latestMessage);
     } catch (err) {
       res.status(500).json(err.message);
     }
