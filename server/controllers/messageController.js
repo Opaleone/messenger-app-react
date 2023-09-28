@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongoose');
 const Message = require('../models/Message')
 
 module.exports = {
@@ -56,6 +57,22 @@ module.exports = {
       }
 
       res.status(200).json({ message: `${req.params.id} deleted!`})
+    } catch (err) {
+      res.status(500).json(err.message);
+    }
+  },
+
+  getConversation: async (req, res) => {
+    try {
+      const message = await Message
+        .find({
+          from: req.params.id, to: req.params.friendId 
+        })
+        .sort({
+          createdAt: -1
+        })
+
+      res.status(200).json(message);
     } catch (err) {
       res.status(500).json(err.message);
     }
