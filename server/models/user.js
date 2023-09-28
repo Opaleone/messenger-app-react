@@ -37,25 +37,7 @@ const userSchema = new Schema(
 )
 
 userSchema.pre('save', async function(next) {
-  // if (this.isNew || !this.isModified('password')) {
-  //   const user = this;
-  //   bcrypt.genSalt(10, (err, salt) => {
-  //     if (err) {
-  //       return next(err);
-  //     }
-  //     bcrypt.hash(user.password, salt, null, (error, hash) => {
-  //       if (error) {
-  //         return next(error);
-  //       }
-  //       console.log('HASH: ', hash);
-  //       user.password = hash;
-  //       console.log('USER.PASSWORD: ', user.password);
-  //       next();
-  //     })
-  //   })
-  // }
   if (!this.isModified("password")) {
-    // Finish here
     return next();
   }
   const salt = await bcrypt.genSalt(10);
