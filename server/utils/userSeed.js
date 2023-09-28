@@ -8,11 +8,8 @@ connection.on('error', (err) => err);
 connection.once('open', async () => {
   console.log('connected');
 
-  // if (await connection.db.listCollections().toArray().includes(collection)) {
-  //   await connection.db.collection(collection).drop();
-  // }
-
   const users = [];
+  const messages = [];
 
   for (let i = 0; i < 1; i++) {
     const fullName = getRandomName();
@@ -56,6 +53,8 @@ connection.once('open', async () => {
       password: password
     });
   }
+
+  
 
   await User.insertMany(users);
   console.log(users);
