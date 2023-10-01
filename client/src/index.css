@@ -115,6 +115,17 @@ body {
   cursor: pointer;
 }
 
+.search-bar {
+  border: none;
+  border-radius: 10px;
+  height: 35%;
+  width: 40%;
+  background-color: var(--gray);
+  color: var(--lightGray);
+  padding: 0 1%;
+  outline: none;
+}
+
 #lower-half {
   display: flex;;
 }
