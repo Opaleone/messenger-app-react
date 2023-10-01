@@ -11,7 +11,7 @@ connection.once('open', async () => {
   const users = [];
   const messages = [];
 
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 200; i++) {
     const fullName = getRandomName();
     const first = fullName.split(' ')[0];
     const last = fullName.split(' ')[1];
