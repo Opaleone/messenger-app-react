@@ -1,104 +1,18 @@
 import React from 'react';
+import axios from 'axios';
 
-let messages = [
-  {
-    sender: 'Aaron Sanchez',
-    messageList: [
-      {
-        messageContent: 'Yo we playin soccer tomorrow??',
-        userId: 'Aaron'
-      },
-      {
-        messageContent: "I'm trying to get COOKED",
-        userId: 'Aaron'
-      },
-      {
-        messageContent: "What time??",
-        userId: 'Leone'
-      },
-      {
-        messageContent: "7 pm",
-        userId: 'Aaron'
-      },
-      {
-        messageContent: "SHEEEESH yuhhh I be out there",
-        userId: 'Leone'
-      },
-      {
-        messageContent: "BET THAT",
-        userId: 'Aaron'
-      },
-      {
-        messageContent: 'Yo we playin soccer tomorrow??',
-        userId: 'Aaron'
-      },
-      {
-        messageContent: "I'm trying to get COOKED",
-        userId: 'Aaron'
-      },
-      {
-        messageContent: "What time??",
-        userId: 'Leone'
-      },
-      {
-        messageContent: "7 pm",
-        userId: 'Aaron'
-      },
-      {
-        messageContent: "SHEEEESH yuhhh I be out there",
-        userId: 'Leone'
-      },
-      {
-        messageContent: "BET THAT",
-        userId: 'Aaron'
-      },
-      {
-        messageContent: 'Yo we playin soccer tomorrow??',
-        userId: 'Aaron'
-      },
-      {
-        messageContent: "I'm trying to get COOKED",
-        userId: 'Aaron'
-      },
-      {
-        messageContent: "What time??",
-        userId: 'Leone'
-      },
-      {
-        messageContent: "7 pm",
-        userId: 'Aaron'
-      },
-      {
-        messageContent: "SHEEEESH yuhhh I be out there",
-        userId: 'Leone'
-      },
-      {
-        messageContent: "BET THAT",
-        userId: 'Aaron'
-      }
-    ],
-    userId: 'Aaron'
-  }
-]
+const users = await axios.get('//localhost:3001/api/users')
+
+console.log(users.data);
 
 const Conversation = () => {
   return (
     <div id='conversation-wrapper'>
       <div id='convo-header'>
-        <h2 id='current-conversation-sender'>{messages[0].sender}</h2>
+        <h2 id='current-conversation-sender'>hello</h2>
       </div>
       <div id='message-display'>
-        {messages[0].messageList.map((message) => {
-          if (message.userId === messages[0].userId) {
-            return <p className='individual-message left'>
-            {message.messageContent}
-          </p>
-          } else {
-            return <p className='individual-message right'>
-            {message.messageContent}
-          </p>
-          }
-        })}
+        display
       </div>
       <div id='convo-input'>
         <input id='convo-text-bar' type='text' placeholder='What to say...'></input>
