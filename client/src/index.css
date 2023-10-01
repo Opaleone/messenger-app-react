@@ -89,6 +89,32 @@ body {
   margin-left: auto;
 }
 
+.signup-form-container {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  margin: auto;
+  background-color: var(--navy);
+  padding: 3rem;
+  justify-content: center;
+}
+
+.form-input {
+  color: black;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.form-button {
+  width: 50%;
+  margin: auto;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  color: var(--gray);
+  cursor: pointer;
+}
+
 #lower-half {
   display: flex;;
 }
