@@ -5,10 +5,6 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleClick() {
-
-  }
-
   async function handleSubmit(e) {
     e.preventDefault();
     console.log(username);
