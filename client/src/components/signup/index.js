@@ -8,21 +8,26 @@ export default function Signup(){
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  async function handleSubmit() {
-    await axios.post('//localhost:3001/api/users/', {
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      await axios.post('//localhost:3001/api/users/', {
       firstName: firstName,
       lastName: lastName,
       userName: username,
       email: email,
       password: password
-    })
+      })
+    } catch (e) {
+      console.log(e.message)
+    }
   }
 
   return (
     <div className='register-page'>
       <form 
         className='form-container'
-        onSubmit={handleSubmit}>
+        onSubmit={(e) => handleSubmit(e)}>
         <input 
           className='form-input'
           type='text' 
