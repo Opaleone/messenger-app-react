@@ -2,22 +2,20 @@ import axios from 'axios';
 import { useState } from 'react';
 
 export default function Signup(){
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [values, setValues] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    username: '',
+    password: '',
+  })
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       await axios.post('//localhost:3001/api/users/', {
-      firstName: firstName,
-      lastName: lastName,
-      userName: username,
-      email: email,
-      password: password
-      })
+        ...values,
+      });
     } catch (e) {
       console.log(e.message)
     }
@@ -32,36 +30,36 @@ export default function Signup(){
           className='form-input'
           type='text' 
           placeholder='First Name'
-          value={firstName}
-          onChange={e => setFirstName(e.target.value)}
+          value={values.firstName}
+          onChange={e => setValues({...values, [e.target.name]: e.target.value})}
           />
         <input 
         className='form-input'
         type='text' 
         placeholder='Last Name (optional)'
-        value={lastName}
-        onChange={e => setLastName(e.target.value)}
+        value={values.lastName}
+        onChange={e => setValues({...values, [e.target.name]: e.target.value})}
         />
         <input 
         className='form-input'
         type='text' 
         placeholder='Email'
-        value={email}
-        onChange={e => setEmail(e.target.value)}
+        value={values.email}
+        onChange={e => setValues({...values, [e.target.name]: e.target.value})}
         />
         <input 
         className='form-input'
         type='text' 
         placeholder='Username'
-        value={username}
-        onChange={e => setUsername(e.target.value)}
+        value={values.username}
+        onChange={e => setValues({...values, [e.target.name]: e.target.value})}
         />
         <input 
           className='form-input'
           type='password' 
           placeholder='Password'
-          value={password}
-          onChange={e => setPassword(e.target.value)}
+          value={values.password}
+          onChange={e => setValues({...values, [e.target.name]: e.target.value})}
           />
 
         <button

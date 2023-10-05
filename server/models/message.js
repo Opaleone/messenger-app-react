@@ -4,17 +4,17 @@ const messageSchema = new Schema(
   {
     messageContent: { 
       type: String, 
-      required: true 
+      required: [true, 'Message must contain content!'] 
     },
     to: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: [true, 'Must include a receiver!']
     },
     from: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: [true, 'Must include a sender!']
     },
   },
   {
