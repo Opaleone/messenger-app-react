@@ -5,23 +5,23 @@ const userSchema = new Schema(
   {
     firstName: { 
       type: String, 
-      required: true 
+      required: [true, 'First name is required.'] 
     },
     lastName: String,
     userName: { 
       type: String, 
       unique: true, 
-      required: true
+      required: [true, 'Username is required.']
     },
     email: { 
       type: String, 
       unique: true, 
-      required: true, 
+      required: [true, 'Email is required'], 
       match: [/.+@.+\..+/, 'Must match an email address!'] 
     },
     password: { 
       type: String, 
-      required: true, 
+      required: [true, 'Password is required.'], 
       minLength: 8 
     },
     friends: [
