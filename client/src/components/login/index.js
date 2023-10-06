@@ -7,20 +7,21 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(username);
-    console.log(password);
-
-    await axios.post('//localhost:3001/api/users', {
+    try {
+      await axios.post('//localhost:3001/api/users', {
       username: username,
       password: password
-    })
+      });
+    } catch (e) {
+      console.log(e.message);
+    }
   }
 
   return (
     <>
       <form 
         className="form-container"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleSubmit(e)}
         >
         <input
           className="form-input"
