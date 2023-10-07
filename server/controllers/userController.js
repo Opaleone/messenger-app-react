@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 const User = require('../models/User')
 const bcrypt = require('bcrypt');
+const { signToken } = require('../utils/auth');
 
 module.exports = {
   getUsers: async (req, res) => {
@@ -131,6 +132,18 @@ module.exports = {
       }
 
       res.status(200).json({ message: 'Friend removed'})
+    } catch (err) {
+      res.status(500).json(err.message);
+    }
+  },
+
+  login: async (req, res) => {
+    try {
+      const currentUser = await User.findOne({username: req.params.username});
+
+      // doSomethingHere();
+
+      res.status(200).json({message: 'Login Succesful!'})
     } catch (err) {
       res.status(500).json(err.message);
     }
