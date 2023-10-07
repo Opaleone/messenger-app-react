@@ -1,30 +1,34 @@
-const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const maxAge = 1*24*60*60;
+const secret = process.env.TOKEN_SECRET;
+const expiration = '2h';
 
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.SECRET, {
-    expiresIn: maxAge,
-  });
+module.exports = {
+  authMiddleware: function ({ req }) {
+    // allows token to be sent via req.body, req.query, or headers
+    let token = req.body.token || req.query.token || req.headers.authorization;
+
+    // Split the token string into an array and return actual token
+    if (req.headers.authorization) {
+      token = token.split(' ').pop().trim();
+    }
+
+    if (!token) {
+      return req;
+    }
+
+    try {
+      const { data } = jwt.verify(token, secret, { maxAge: expiration });
+      req.user = data;
+    } catch {
+      console.log('Invalid token');
+    }
+
+    return req;
+  },
+  signToken: function ({ email, name, _id }) {
+    const payload = { email, name, _id };
+    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  },
 };
-
-module.exports.signup = async (req, res, next) => {
-  try {
-    const {email, password} = req.body;
-    const user = await User.create({email, password});
-    const token = createToken(User._id);
-
-    res.cookie('jwt', token, {
-      withCredentials: true,
-      httpOnly: false,
-      maxAge: maxAge * 1000
-    });
-
-    res.status(201).json({user: user._id, created: true})
-  } catch (e) {
-    console.log(e.message)
-  }
-}
-
-module.exports.login = async (req, res, next) => {};
