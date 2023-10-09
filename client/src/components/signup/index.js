@@ -8,18 +8,26 @@ export default function Signup(){
     email: '',
     username: '',
     password: '',
-  })
+  });
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await axios.post('//localhost:3001/api/users/', {
+      const {data} = await axios.post('//localhost:3001/api/users/', {
         ...values,
       });
+
+      if (data) {
+        if (data.errors) {
+          console.log(data.errors);
+        }
+      }
+
+      console.log(data);
     } catch (e) {
-      console.log(e.message)
+      console.log(e.message);
     }
-  }
+  };
 
   return (
     <div className='register-page'>
@@ -28,37 +36,37 @@ export default function Signup(){
         onSubmit={(e) => handleSubmit(e)}>
         <input 
           className='form-input'
-          type='text' 
+          type='text'
+          name='firstName'
           placeholder='First Name'
-          value={values.firstName}
           onChange={e => setValues({...values, [e.target.name]: e.target.value})}
           />
         <input 
         className='form-input'
-        type='text' 
+        type='text'
+        name='lastName'
         placeholder='Last Name (optional)'
-        value={values.lastName}
         onChange={e => setValues({...values, [e.target.name]: e.target.value})}
         />
         <input 
         className='form-input'
         type='text' 
+        name='email'
         placeholder='Email'
-        value={values.email}
         onChange={e => setValues({...values, [e.target.name]: e.target.value})}
         />
         <input 
         className='form-input'
-        type='text' 
+        type='text'
+        name='username'
         placeholder='Username'
-        value={values.username}
         onChange={e => setValues({...values, [e.target.name]: e.target.value})}
         />
         <input 
           className='form-input'
-          type='password' 
+          type='password'
+          name='password'
           placeholder='Password'
-          value={values.password}
           onChange={e => setValues({...values, [e.target.name]: e.target.value})}
           />
 
